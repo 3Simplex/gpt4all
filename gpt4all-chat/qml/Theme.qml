@@ -1208,6 +1208,17 @@ QtObject {
         return chatViewModelListHighlightColor
     }
 
+    property color scrollBarColor: {
+        switch (MySettings.chatTheme) {
+            case "LegacyDark":
+                return purple400
+            case "Dark":
+                return darkgray0
+            default:
+                return green100
+        }
+    }
+
     property real fontScale: MySettings.fontSize === "Small"  ? 1 :
                              MySettings.fontSize === "Medium" ? 1.3 :
                                                   /* "Large" */ 1.8

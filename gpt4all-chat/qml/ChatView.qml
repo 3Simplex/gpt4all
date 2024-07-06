@@ -779,6 +779,10 @@ Rectangle {
 
                             ScrollBar.vertical: ScrollBar {
                                 policy: ScrollBar.AsNeeded
+                                contentItem: Rectangle {
+                                        implicitWidth: 8
+                                        color: theme.scrollBarColor
+                                    }
                             }
 
                             Accessible.role: Accessible.List
