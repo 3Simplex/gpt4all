@@ -40,12 +40,24 @@ Rectangle {
             id: listView
             model: LocalDocs.localDocsModel
             boundsBehavior: Flickable.StopAtBounds
+
             ScrollBar.vertical: ScrollBar {
-                parent: listView.parent
-                anchors.top: listView.top
-                anchors.left: listView.right
-                anchors.bottom: listView.bottom
+                policy: ScrollBar.AsNeeded
+                contentItem: Rectangle {
+                    radius: 10
+                    implicitWidth: theme.scrollBarWidth
+                    color: theme.scrollBarColor
+                    opacity: parent.active ? 1 : 0
+
+                    Behavior on opacity {
+                        OpacityAnimator {
+                            duration: 400
+                            easing.type: Easing.OutQuad
+                        }
+                    }
+                }
             }
+
             spacing: 15
 
             delegate: Rectangle {
@@ -91,6 +103,7 @@ Rectangle {
                             color: theme.mutedTextColor
                             font.pixelSize: theme.fontSizeSmall
                         }
+
                         RowLayout {
                             visible: model.updating
                             Layout.fillWidth: true

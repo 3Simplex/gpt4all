@@ -432,14 +432,33 @@ Rectangle {
                                 anchors.fill: parent
                                 anchors.margins: 10
                                 clip: true
-                                ScrollBar.vertical.policy: ScrollBar.AsNeeded
+                                ScrollBar.vertical.policy: ScrollBar.AlwaysOff
                                 ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
                                 ListView {
                                     id: comboItemPopupListView
                                     implicitHeight: contentHeight
                                     model: comboBox.popup.visible ? comboBox.delegateModel : null
                                     currentIndex: comboBox.highlightedIndex
-                                    ScrollIndicator.vertical: ScrollIndicator { }
+                                    cacheBuffer: Math.max(0, listView.contentHeight)
+                                    boundsBehavior: Flickable.StopAtBounds
+
+                                    ScrollBar.vertical: ScrollBar {
+                                        policy: ScrollBar.AsNeeded
+                                        contentItem: Rectangle {
+                                            radius: 10
+                                            implicitWidth: theme.scrollBarWidth
+                                            color: theme.scrollBarColor
+                                            opacity: parent.active ? 1 : 0
+
+                                            Behavior on opacity {
+                                                OpacityAnimator {
+                                                    duration: 400
+                                                    easing.type: Easing.OutQuad
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -776,13 +795,24 @@ Rectangle {
                             Layout.alignment: Qt.AlignHCenter
                             spacing: 25
                             model: chatModel
+                            cacheBuffer: Math.max(0, listView.contentHeight)
+                            boundsBehavior: Flickable.StopAtBounds
 
                             ScrollBar.vertical: ScrollBar {
                                 policy: ScrollBar.AsNeeded
                                 contentItem: Rectangle {
-                                        implicitWidth: 8
-                                        color: theme.scrollBarColor
+                                    radius: 10
+                                    implicitWidth: theme.scrollBarWidth
+                                    color: theme.scrollBarColor
+                                    opacity: parent.active ? 1 : 0
+
+                                    Behavior on opacity {
+                                        OpacityAnimator {
+                                            duration: 400
+                                            easing.type: Easing.OutQuad
+                                        }
                                     }
+                                }
                             }
 
                             Accessible.role: Accessible.List

@@ -1213,9 +1213,20 @@ QtObject {
             case "LegacyDark":
                 return purple400
             case "Dark":
-                return darkgray0
+                return green400
             default:
-                return green100
+                return green300
+        }
+    }
+
+    property int scrollBarWidth: {
+        switch (MySettings.fontSize) {
+            case "Small":
+                return 7;
+            case "Medium":
+                return 9;
+            default:
+                return 11;
         }
     }
 

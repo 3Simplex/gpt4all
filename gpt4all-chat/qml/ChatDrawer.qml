@@ -82,14 +82,24 @@ Rectangle {
                 anchors.leftMargin: 10
                 anchors.rightMargin: 10
                 model: ChatListModel
-
+                boundsBehavior: Flickable.StopAtBounds
                 Component.onCompleted: ChatListModel.loadChats()
 
                 ScrollBar.vertical: ScrollBar {
-                    parent: conversationList.parent
-                    anchors.top: conversationList.top
-                    anchors.left: conversationList.right
-                    anchors.bottom: conversationList.bottom
+                    policy: ScrollBar.AsNeeded
+                    contentItem: Rectangle {
+                        radius: 10
+                        implicitWidth: theme.scrollBarWidth
+                        color: theme.scrollBarColor
+                        opacity: parent.active ? 1 : 0
+
+                        Behavior on opacity {
+                            OpacityAnimator {
+                                duration: 400
+                                easing.type: Easing.OutQuad
+                            }
+                        }
+                    }
                 }
 
                 Component {
